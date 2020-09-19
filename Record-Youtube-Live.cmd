@@ -20,17 +20,17 @@ if DEFINED PROXY (
 )
 
 if not DEFINED resolution (
-  set format=95
+  set format=95,300
 ) else (
   if "%resolution%"=="144" set format=91
   if "%resolution%"=="240" set format=92
   if "%resolution%"=="360" set format=93
   if "%resolution%"=="480" set format=94
-  if "%resolution%"=="720" set format=95
-  if "%resolution%"=="1080" set format=96
+  if "%resolution%"=="720" set format=95,300
+  if "%resolution%"=="1080" set format=96,301
 )
 
-set headers="Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7 \r\nAccept-Language: en-us,en;q=0.5\r\nAccept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8\r\nUser-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.112 Safari/537.36\r\n"
+set headers="Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7 \nAccept-Language: en-us,en;q=0.5\nAccept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8\nUser-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.112 Safari/537.36"
 
 set t=%time::=%
 set t=%t: =0%
@@ -59,7 +59,7 @@ if %size% LSS 20 (
   goto end
 )
 set /p url=<%outf%.txt
-
+ffmpeg -version|grep version
 ffmpeg -hide_banner -headers %headers% -i "%url%" -c copy -bsf:a aac_adtstoasc -y "%outf%.flv"
 
 :end
