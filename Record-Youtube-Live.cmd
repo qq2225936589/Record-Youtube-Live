@@ -1,13 +1,18 @@
 @echo off
 
-set inurl=%~1
-set resolution=%~2
-set format=95
+set inall=%*
+
+set inurl=
+set resolution=
+FOR /F "tokens=1,2,3*" %%a in ("%inall%") do (
+  set inurl=%%a
+  set resolution=%%b
+)
 
 if not DEFINED inurl (
   echo Usage: %~n0 [Live URL] [Resolution 144^|240^|360^|480^|720^|1080]
-  echo   Example %~n0 "https://www.youtube.com/watch?v=9Auq9mYxFEE" 720
-  echo   Example %~n0 "https://www.youtube.com/watch?v=9Auq9mYxFEE"
+  echo   Example %~n0 https://www.youtube.com/watch?v=9Auq9mYxFEE 1080
+  echo   Example %~n0 https://www.youtube.com/watch?v=9Auq9mYxFEE
   echo   Resolution default 720
   goto end
 )
